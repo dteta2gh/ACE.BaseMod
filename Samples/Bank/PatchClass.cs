@@ -106,7 +106,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         player.SendMessage($"\nBankable Items:\n");
         foreach (var item in Settings.Items)
         {
-            player.SendMessage($"{item.Name} (WCID={item.Id})\n");
+            player.SendMessage($"{item.Name}, (WCID={item.Id})\n");
         }
 
         var sb = new StringBuilder("\nBanked items:");
@@ -300,7 +300,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
     public static bool TryHandleSend(Player player, string recipient, BankItem item, int amount)
     {
         var banked = player.GetBanked(item.Prop);
-        player.SendMessage($"banked={banked}  amount={amount}.\n");
+        player.SendMessage($"/bank send {recipient} {item.Name} {amount} | banked={banked} {item.Name}.\n");
         if (banked < amount | banked == 0)
         {
             player.SendMessage($"Unable to withdraw {amount}.  You have {banked} {item.Name}");
@@ -317,12 +317,11 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         var r = alts.Where(x => x.Name.Contains(recipient, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
         if (r is null)
         {
-            player.SendMessage($"Recipient was not found: \n{string.Join("\n", alts.Select(x => $"{x.Name} - {x.Level}"))}");
+            player.SendMessage($"Recipient was not found: \nalts:\n{string.Join("\n", alts.Select(x => $"{x.Name} - {x.Level}"))}");
             return false;
         }
 
         player.IncBanked(item.Prop, -amount);
-        //player.SendMessage($"r={r.Name}, item.pop={item.Prop}, amount={amount}\n");
 
         r.IncBanked(item.Prop, amount, player);
 
