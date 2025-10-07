@@ -274,7 +274,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         }
 
         //See if you can create items using the /ci approach
-        if (player.TryCreateItems($"{item.Id} {amount+1}"))
+        if (player.TryCreateItems($"{item.Id} {amount}"))
         {
             player.IncBanked(item.Prop, -amount);
             player.SendMessage($"Withdrew {amount} {item.Name}. {player.GetBanked(item.Prop)} banked, {player.GetNumInventoryItemsOfWCID(item.Id)} held");
