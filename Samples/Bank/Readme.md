@@ -9,6 +9,7 @@ The verbs available are currently:
 * `list` - print current status
 * `give`
 * `take`
+* `send` - send to alts on the same account (only for bankable items currently)
 
 
 
@@ -17,7 +18,7 @@ The available commands are:
 * `/bank <verb> [name|id [amount=1|*]]`
   * Bankable `Items` can be defined in the `Settings.json` with a name, WCID, and Id to use to store them as a `PropertyInt64` 
   * `/bank list` prints bankable items, with the amount stored and held
-  * `/bank store [name|id [amount=1|*]]` stores a specified amount or all available of an `Item` matching part of the name or all of the ID
+  * `/bank give [name|id [amount=1|*]]` stores a specified amount or all available of an `Item` matching part of the name or all of the ID
   * `/bank take [name|id [amount=1|*]]` does the opposite of store
 * `/cash <verb> [name]`
   * `Currencies` items can be defined in `Settings.json` with a name, WCID, and cost.  Deposited items do not use these values.
