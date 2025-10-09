@@ -1,4 +1,9 @@
 ﻿## Bank
+modified from ACE BaseMod by Aquafir to add send command for offline players
+https://github.com/aquafir/ACE.BaseMod/Mods/Bank
+
+settings.json ans code was modified to add writ of refuge to bankable items
+you need to make sure you have this copy in the ACE/Mods/Bank folder
 
 This mod adds common banking options for items, currency, and luminance.
 
