@@ -299,25 +299,39 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
     /// </summary>
     public static bool TryHandleSend(Player player, string recipient, BankItem item, int amount)
     {
+        //V1.02+ working on offline players only | this is left for potentially sending to online(all) players
+        //var sendto = PlayerManager.GetAllPlayers().Where(x => player.Name != x.Name);
+        //var s = sendto.Where(x => x.Name.Equals(recipient, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        //if (s is null)
+        //{
+        //    player.SendMessage($"Recipient {recipient} was not found\n");
+        //    return false;
+        //}
+        //player.SendMessage($"sendto: {s.Name}\n.  -Account: {s.Account.AccountId}\n");
+
         var banked = player.GetBanked(item.Prop);
         player.SendMessage($"/bank send {recipient} {item.Name} {amount} | banked={banked} {item.Name}.\n");
-        if (banked < amount | banked == 0)
+        if (banked < amount || banked == 0)
         {
             player.SendMessage($"Unable to withdraw {amount}.  You have {banked} {item.Name}");
             return false;
         }
-
-        var alts = PlayerManager.GetAllOffline().Where(x => player.Account.AccountId == x.Account.AccountId);
+        
+        //var alts = PlayerManager.GetAllOffline().Where(x => player.Account.AccountId == x.Account.AccountId);
+        var alts = PlayerManager.GetAllOffline().Where(x => player.Name != x.Name);
         if (alts is null)
         {
-            player.SendMessage($"No other players found on this account.");
+            //player.SendMessage($"No other players found on this account.");
+            player.SendMessage($"No other players found Offline.");
             return false;
         }
 
-        var r = alts.Where(x => x.Name.Contains(recipient, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        //var r = alts.Where(x => x.Name.Contains(recipient, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        var r = alts.Where(x => x.Name.Equals(recipient, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
         if (r is null)
         {
-            player.SendMessage($"Recipient was not found: \nalts:\n{string.Join("\n", alts.Select(x => $"{x.Name} - {x.Level}"))}");
+            //player.SendMessage($"Recipient {recipient} was not found Offline: \nalts:\n{string.Join("\n", alts.Select(x => $"{x.Name} - {x.Level}"))}");
+            player.SendMessage($"Recipient {recipient} was not found Offline: \n");
             return false;
         }
 
