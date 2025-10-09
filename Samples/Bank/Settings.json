@@ -1,0 +1,142 @@
+{
+  "VendorsUseBank": true,
+  "DirectDeposit": true,
+  "MaxCoinsDropped": 100000,
+  "CoinExplosion": true,
+  "MaxPiles": 10,
+  "PileWcid": 273,
+  "PileValue": 25000,
+  "ExplosionVelocity": 6,
+  "Items": [
+    {
+      "Name": "MMD",
+      "Id": 20630,
+      "Prop": 40000
+    },
+    {
+      "Name": "Infused Amber Shard",
+      "Id": 52968,
+      "Prop": 40001
+    },
+    {
+      "Name": "Small Olthoi Venom Sac",
+      "Id": 36376,
+      "Prop": 40002
+    },
+    {
+      "Name": "A'nekshay Token",
+      "Id": 44240,
+      "Prop": 40003
+    },
+    {
+      "Name": "Ornate Gear Marker",
+      "Id": 43142,
+      "Prop": 40004
+    },
+    {
+      "Name": "Colosseum Coin",
+      "Id": 36518,
+      "Prop": 40005
+    },
+    {
+      "Name": "Ancient Mhoire Coin",
+      "Id": 35383,
+      "Prop": 40006
+    },
+    {
+      "Name": "Promissory Note",
+      "Id": 43901,
+      "Prop": 40007
+    },
+    {
+      "Name": "Writ of Refuge",
+      "Id": 11710,
+      "Prop": 40008
+    }
+  ],
+  "ExcessSetToMax": true,
+  "LuminanceProperty": 39998,
+  "CashProperty": 39999,
+  "Currencies": [
+    {
+      "Name": "Pyreal",
+      "Id": 273,
+      "Value": 1
+    },
+    {
+      "Name": "I",
+      "Id": 2621,
+      "Value": 100
+    },
+    {
+      "Name": "V",
+      "Id": 2622,
+      "Value": 500
+    },
+    {
+      "Name": "X",
+      "Id": 2623,
+      "Value": 1000
+    },
+    {
+      "Name": "L",
+      "Id": 2624,
+      "Value": 5000
+    },
+    {
+      "Name": "C",
+      "Id": 2625,
+      "Value": 10000
+    },
+    {
+      "Name": "D",
+      "Id": 2626,
+      "Value": 50000
+    },
+    {
+      "Name": "M",
+      "Id": 2627,
+      "Value": 100000
+    },
+    {
+      "Name": "CL",
+      "Id": 7374,
+      "Value": 15000
+    },
+    {
+      "Name": "CC",
+      "Id": 7375,
+      "Value": 20000
+    },
+    {
+      "Name": "CCL",
+      "Id": 7376,
+      "Value": 25000
+    },
+    {
+      "Name": "DCCL",
+      "Id": 7377,
+      "Value": 75000
+    },
+    {
+      "Name": "MD",
+      "Id": 20628,
+      "Value": 150000
+    },
+    {
+      "Name": "MM",
+      "Id": 20629,
+      "Value": 200000
+    },
+    {
+      "Name": "MMD",
+      "Id": 20630,
+      "Value": 250000
+    },
+    {
+      "Name": "CashSink",
+      "Id": 40652,
+      "Value": 12500000
+    }
+  ]
+}

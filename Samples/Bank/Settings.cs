@@ -24,6 +24,7 @@ public class Settings
         new ("Colosseum Coin",36518, 40005),
         new ("Ancient Mhoire Coin", 35383, 40006),
         new ("Promissory Note", 43901, 40007),
+        new ("Writ of Refuge", 11710, 40008),
     };
     //Reduces amount to a cap
     public bool ExcessSetToMax { get; set; } = true;
