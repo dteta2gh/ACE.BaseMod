@@ -41,12 +41,12 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         //Try to parse a valid command
         if (!parameters.TryParseCommand(out var verb, out var name, out var amount, out var wildcardAmount, out var recipient))
         {
-            //player.SendMessage($"Usage: <command> [name|id [amount=1]]\nAvailable commands: {Commands}");
+            //player.SendMessage($"Usage: <command> [name|id] [amount=1]]\nAvailable commands: {Commands}");
             player.SendMessage($"+---------------BANK--------------V1.01----+\n");
             player.SendMessage($"Available commands: {Commands}\n");
             player.SendMessage($"/Bank List --- List your Bank contents.\n");
-            player.SendMessage($"/Bank <Give/Take> [name|id [amount=1]] --- Give or Take Items to/from Bank\n");
-            player.SendMessage($"/Bank Send [recipient] [name|id [amount=1] --- Send Items to a recipient.\n");
+            player.SendMessage($"/Bank <Give/Take> [name|id] [amount=1]] --- Give or Take Items to/from Bank\n");
+            player.SendMessage($"/Bank Send [recipient] [name|id] [amount=1] --- Send Items to a recipient.\n");
             return;
         }
 
@@ -136,7 +136,8 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         //Try to parse a valid command
         if (parameters.Length == 0 || !Enum.TryParse<Transaction>(parameters[0], true, out var verb))
         {
-            player.SendMessage($"/Lum Usage: <command>: {Commands}");
+            //player.SendMessage($"/Lum Usage: <command>: {Commands}");
+            player.SendMessage($"/Lum Usage: <command>: \nAvailable commands: List, Give, Take");
             return;
         }
 
@@ -167,7 +168,8 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
                 player.SendMessage($"You've withdrawn {withdraw} luminance.  You now have {player.GetBanked(Settings.LuminanceProperty):N0}.");
                 break;
             default:
-                player.SendMessage($"{verb} not implimented for luminance.\n");
+                //player.SendMessage($"{verb} not implimented for luminance.\n");
+                player.SendMessage($"/Lum Usage: <command>: \nAvailable commands: List, Give, Take");
                 break;
         }
     }
@@ -181,14 +183,15 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
 
         if (!parameters.TryParseCommand(out var verb, out var name, out var amount, out var wildcardAmount, out var recipient))
         {
-            player.SendMessage($"/Cash Usage: <command> [name|id [amount=1]]\nAvailable commands: {Commands}");
+            //player.SendMessage($"/Cash Usage: <command> [name|id] [amount=1]]\nAvailable commands: {Commands}");
+            player.SendMessage($"/Cash Usage: <command> [name|id] [amount=1]\nAvailable commands: List, Give, Take");
             return;
         }
 
         switch (verb)
         {
             case Transaction.List:
-                player.SendMessage($"You have {player.GetBanked(Settings.CashProperty):N0}.\nCurrencies: {Currencies}");
+                player.SendMessage($"You have {player.GetBanked(Settings.CashProperty):N0} Pyreals.\nCurrencies: {Currencies}");
                 return;
             //Deposit everything
             case Transaction.Give:
@@ -299,16 +302,6 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
     /// </summary>
     public static bool TryHandleSend(Player player, string recipient, BankItem item, int amount)
     {
-        //V1.02+ working on offline players only | this is left for potentially sending to online(all) players
-        //var sendto = PlayerManager.GetAllPlayers().Where(x => player.Name != x.Name);
-        //var s = sendto.Where(x => x.Name.Equals(recipient, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-        //if (s is null)
-        //{
-        //    player.SendMessage($"Recipient {recipient} was not found\n");
-        //    return false;
-        //}
-        //player.SendMessage($"sendto: {s.Name}\n.  -Account: {s.Account.AccountId}\n");
-
         var banked = player.GetBanked(item.Prop);
         player.SendMessage($"/bank send {recipient} {item.Name} {amount} | banked={banked} {item.Name}.\n");
         if (banked < amount || banked == 0)
@@ -337,7 +330,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
 
         player.IncBanked(item.Prop, -amount);
 
-        r.IncBanked(item.Prop, amount, player);
+        r.IncBanked(item.Prop, amount);
 
         player.SendMessage($"Sent {amount:N0} {item.Name}(s) from {player.Name} to {r.Name}.\n{banked - amount} remaining.");
         return true;
@@ -361,21 +354,11 @@ public static class BankExtensions
     public static void IncBanked(this Player player, int prop, long amount) =>
         player.SetProperty((PropertyFloat)prop, player.GetBanked(prop) + amount);
        
-    public static double GetBanked(this OfflinePlayer player, int prop) //=>
-    {
-        return player.GetProperty((PropertyFloat)prop) ?? 0;
-
-    }
-    public static void IncBanked(this OfflinePlayer recipient, int prop, double amount, Player sender) //=>
-    {
-        //sender.SendMessage($"sender={sender.Name}. recipient={recipient.Name}, prop={prop}, amount={amount}\n");
-        //sender.SendMessage($"sender banked= {sender.GetBanked(prop)}\n");
-        //sender.SendMessage($"recipient banked= {recipient.GetBanked(prop)}\n");
+    public static double GetBanked(this OfflinePlayer player, int prop) =>
+        player.GetProperty((PropertyFloat)prop) ?? 0;
+    public static void IncBanked(this OfflinePlayer recipient, int prop, double amount) =>
         recipient.SetProperty((PropertyFloat)prop, recipient.GetBanked(prop) + amount);
-        //sender.SendMessage($"sender banked after= {sender.GetBanked(prop)}\n");
-        //sender.SendMessage($"recipient banked after= {recipient.GetBanked(prop)}\n");
-    }
-
+     
     //Parsing
     static readonly string[] USAGES = new string[] {
         $@"(?<verb>{Transaction.List})$",
